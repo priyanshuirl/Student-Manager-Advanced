@@ -2,11 +2,13 @@ public class Students {
     String program;
     int year;
     float average;
+    String lastName;
 
-    public Students(String sprogram, int syear, float saverage) {
+    public Students(String sprogram, int syear, float saverage, String slastname) {
         this.program = sprogram;
         this.year = syear;
         this.average = saverage;
+        this.lastName = slastname;
     }
 
     public String getProgram() {
@@ -21,6 +23,10 @@ public class Students {
         return average;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setProgram(String sprogram) {
         this.program = sprogram;
     }
@@ -33,11 +39,16 @@ public class Students {
         this.average = saverage;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String toString() {
-        return "\nProgram : " + program + "\nYear : " + year + "\nAverage Grade : " + average + "\n";
+        return "\nProgram : " + program + "\nYear : " + year + "\nAverage Grade : " + average + "\nlast Name : "
+                + lastName + "\n";
     }
 
     public String toFileString() {
-        return program + "-" + year + "-" + average + " ";
+        return program + "-" + year + "-" + average + "-" + lastName + " ";
     }
 }

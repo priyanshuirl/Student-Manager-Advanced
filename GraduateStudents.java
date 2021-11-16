@@ -3,9 +3,9 @@ public class GraduateStudents extends Students {
     int isPHD;
     String undergradschool;
 
-    GraduateStudents(String gprogram, int gyearworked, float gaverage, String gupervisor, int isPHD,
+    GraduateStudents(String gprogram, int gyearworked, float gaverage, String glastname, String gupervisor, int isPHD,
             String undergradschool) {
-        super(gprogram, gyearworked, gaverage);
+        super(gprogram, gyearworked, gaverage, glastname);
     }
 
     public String getSupervisor() {
@@ -36,11 +36,13 @@ public class GraduateStudents extends Students {
     public String toString() {
         return "\nProgram : " + program + "\nYears Worked : " + year + "\nAverage Grade : " + average
                 + "\nSupervisor Name : " + supervisor + "\nIs student a PHD ? : " + ((isPHD == 1) ? " Yes " : " No ")
-                + "\nName of the Undergraduate School Attended: " + undergradschool + "\n";
+                + "\nName of the Undergraduate School Attended: " + undergradschool + "\nLast Name : " + lastName
+                + "\n";
     }
 
     @Override
     public String toFileString() {
-        return program + "-" + year + "-" + average + "-" + supervisor + "-" + isPHD + "-" + undergradschool + " ";
+        return program + "-" + year + "-" + average + "-" + lastName + "-" + supervisor + "-" + isPHD + "-"
+                + undergradschool + " ";
     }
 }
