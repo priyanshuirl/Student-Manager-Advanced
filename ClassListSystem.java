@@ -61,12 +61,16 @@ public class ClassListSystem {
                         String lname = scan.nextLine();
                         if (lname != "") {
                             lastname = lname.toLowerCase();
-                            Students studentrecord = new Students(program, year, avggrade, lastname);
-                            if (studentmanager.checkstudent(program, year, avggrade, lastname) == null) {
-                                studentmanager.addStudents(studentrecord);
-                                System.out.println("\n\nData for the Student added successfully.\n");
-                            } else {
-                                System.out.println("\n\nData for this student already exists.\n");
+                            try {
+                                Students studentrecord = new Students(program, year, avggrade, lastname);
+                                if (studentmanager.checkstudent(program, year, avggrade, lastname) == null) {
+                                    studentmanager.addStudents(studentrecord);
+                                    System.out.println("\n\nData for the Student added successfully.\n");
+                                } else {
+                                    System.out.println("\n\nData for this student already exists.\n");
+                                }
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
                             }
                         } else {
                             System.out.println(
@@ -125,14 +129,18 @@ public class ClassListSystem {
                         String lname = scan.nextLine();
                         if (lname != "") {
                             lastname = lname.toLowerCase();
-                            GraduateStudents studentrecord = new GraduateStudents(program, year, avggrade, lastname,
-                                    supervisor, isPHD, undergname);
-                            if (studentmanager.checkgradstudent(program, year, avggrade, lastname, supervisor, isPHD,
-                                    undergname) == null) {
-                                studentmanager.addGraduateStudents(studentrecord);
-                                System.out.println("\n\nData for the Student added successfully.\n");
-                            } else {
-                                System.out.println("\n\nData for this student already exists.\n");
+                            try {
+                                GraduateStudents studentrecord = new GraduateStudents(program, year, avggrade, lastname,
+                                        supervisor, isPHD, undergname);
+                                if (studentmanager.checkgradstudent(program, year, avggrade, lastname, supervisor,
+                                        isPHD, undergname) == null) {
+                                    studentmanager.addGraduateStudents(studentrecord);
+                                    System.out.println("\n\nData for the Student added successfully.\n");
+                                } else {
+                                    System.out.println("\n\nData for this student already exists.\n");
+                                }
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
                             }
                         } else {
                             System.out.println(
@@ -237,9 +245,13 @@ public class ClassListSystem {
                                 int uyear = Integer.parseInt(items[1]);
                                 float uavggrade = Float.parseFloat(items[2]);
                                 String ulastname = items[3];
-                                Students studentrecord = new Students(uprogram, uyear, uavggrade, ulastname);
-                                if (studentmanager.checkstudent(uprogram, uyear, uavggrade, ulastname) == null) {
-                                    studentmanager.addStudents(studentrecord);
+                                try {
+                                    Students studentrecord = new Students(uprogram, uyear, uavggrade, ulastname);
+                                    if (studentmanager.checkstudent(uprogram, uyear, uavggrade, ulastname) == null) {
+                                        studentmanager.addStudents(studentrecord);
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
                                 }
                             } else if (items.length == 7) {
                                 String gprogram = items[0];
@@ -249,11 +261,15 @@ public class ClassListSystem {
                                 String gsuper = items[4];
                                 int gisphd = Integer.parseInt(items[5]);
                                 String gugname = items[6];
-                                GraduateStudents studentrecord = new GraduateStudents(gprogram, gyear, gavggrade,
-                                        glastname, gsuper, gisphd, gugname);
-                                if (studentmanager.checkgradstudent(gprogram, gyear, gavggrade, glastname, gsuper,
-                                        gisphd, gugname) == null) {
-                                    studentmanager.addGraduateStudents(studentrecord);
+                                try {
+                                    GraduateStudents studentrecord = new GraduateStudents(gprogram, gyear, gavggrade,
+                                            glastname, gsuper, gisphd, gugname);
+                                    if (studentmanager.checkgradstudent(gprogram, gyear, gavggrade, glastname, gsuper,
+                                            gisphd, gugname) == null) {
+                                        studentmanager.addGraduateStudents(studentrecord);
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
                                 }
                             }
                         }

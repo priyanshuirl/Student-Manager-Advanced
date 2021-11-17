@@ -4,7 +4,7 @@ public class GraduateStudents extends Students {
     String undergradschool;
 
     GraduateStudents(String gprogram, int gyearworked, float gaverage, String glastname, String gsupervisor, int isPHD,
-            String undergradschool) {
+            String undergradschool) throws Exception {
         super(gprogram, gyearworked, gaverage, glastname);
 
         this.supervisor = gsupervisor;

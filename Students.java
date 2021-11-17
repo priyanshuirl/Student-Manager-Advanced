@@ -5,11 +5,15 @@ public class Students {
     String lastName;
     int hashid;
 
-    public Students(String sprogram, int syear, float saverage, String slastname) {
-        this.program = sprogram;
-        this.year = syear;
-        this.average = saverage;
-        this.lastName = slastname;
+    public Students(String sprogram, int syear, float saverage, String slastname) throws Exception {
+        if (saverage >= 0 && saverage <= 100) {
+            this.program = sprogram;
+            this.year = syear;
+            this.average = saverage;
+            this.lastName = slastname;
+        } else {
+            throw new Exception("Fatal error: maxFaces must be a positive integer.");
+        }
     }
 
     public String getProgram() {
