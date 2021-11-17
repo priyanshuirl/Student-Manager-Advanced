@@ -44,7 +44,7 @@ public class Students {
     }
 
     public String toString() {
-        return "\nProgram : " + program + "\nYear : " + year + "\nAverage Grade : " + average + "\nlast Name : "
+        return "Program : " + program + "\nYear : " + year + "\nAverage Grade : " + average + "\nlast Name : "
                 + lastName + "\n";
     }
 

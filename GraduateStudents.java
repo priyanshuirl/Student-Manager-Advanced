@@ -3,9 +3,13 @@ public class GraduateStudents extends Students {
     int isPHD;
     String undergradschool;
 
-    GraduateStudents(String gprogram, int gyearworked, float gaverage, String glastname, String gupervisor, int isPHD,
+    GraduateStudents(String gprogram, int gyearworked, float gaverage, String glastname, String gsupervisor, int isPHD,
             String undergradschool) {
         super(gprogram, gyearworked, gaverage, glastname);
+
+        this.supervisor = gsupervisor;
+        this.isPHD = isPHD;
+        this.undergradschool = undergradschool;
     }
 
     public String getSupervisor() {
@@ -34,7 +38,7 @@ public class GraduateStudents extends Students {
 
     @Override
     public String toString() {
-        return "\nProgram : " + program + "\nYears Worked : " + year + "\nAverage Grade : " + average
+        return "Program : " + program + "\nYears Worked : " + year + "\nAverage Grade : " + average
                 + "\nSupervisor Name : " + supervisor + "\nIs student a PHD ? : " + ((isPHD == 1) ? " Yes " : " No ")
                 + "\nName of the Undergraduate School Attended: " + undergradschool + "\nLast Name : " + lastName
                 + "\n";
