@@ -12,7 +12,7 @@ public class Students {
             this.average = saverage;
             this.lastName = slastname;
         } else {
-            throw new Exception("Fatal error: maxFaces must be a positive integer.");
+            throw new Exception("\nFatal error: Average Grade should be between 0 and 100 (inclusive).");
         }
     }
 

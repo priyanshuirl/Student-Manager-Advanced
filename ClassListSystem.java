@@ -42,114 +42,123 @@ public class ClassListSystem {
             menu = scan.nextInt();
             if (menu <= 9 && menu >= 1) {
                 if (menu == 1) {
-                    System.out.println("\nEnter Student Program and Year for the Student: ");
-                    scan.skip("\\R?");
-                    String[] info = scan.nextLine().split(" ");
-                    if ((!info[0].equals(null) || !info[info.length - 1].equals(null))
-                            && (!info[0].equals("") && !info[info.length - 1].equals("")) && info.length >= 2) {
-                        program = info[0].toLowerCase();
-                        year = Integer.parseInt(info[info.length - 1]);
+                    try {
+                        System.out.println("\nEnter Student Program and Year for the Student: ");
+                        scan.skip("\\R?");
+                        String[] info = scan.nextLine().split(" ");
+                        if ((!info[0].equals(null) || !info[info.length - 1].equals(null))
+                                && (!info[0].equals("") && !info[info.length - 1].equals("")) && info.length >= 2) {
+                            program = info[0].toLowerCase();
+                            year = Integer.parseInt(info[info.length - 1]);
 
-                        System.out.print("Enter Average grade, or leave blank: ");
-                        String grade = scan.nextLine();
-                        if (grade.length() == 0) {
-                            avggrade = 0.0f;
-                        } else {
-                            avggrade = (Float.parseFloat(grade));
-                        }
-                        System.out.print("Enter the Last Name of the Student :");
-                        String lname = scan.nextLine();
-                        if (lname != "") {
-                            lastname = lname.toLowerCase();
-                            try {
-                                Students studentrecord = new Students(program, year, avggrade, lastname);
-                                if (studentmanager.checkstudent(program, year, avggrade, lastname) == null) {
-                                    studentmanager.addStudents(studentrecord);
-                                    System.out.println("\n\nData for the Student added successfully.\n");
-                                } else {
-                                    System.out.println("\n\nData for this student already exists.\n");
-                                }
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
+                            System.out.print("Enter Average grade, or leave blank: ");
+                            String grade = scan.nextLine();
+                            if (grade.length() == 0) {
+                                avggrade = 0.0f;
+                            } else {
+                                avggrade = (Float.parseFloat(grade));
                             }
-                        } else {
-                            System.out.println(
-                                    "\nLast Name cannot be left Blank. It is manadatory to enter last name, Please try again.\n");
-                        }
+                            System.out.print("Enter the Last Name of the Student :");
+                            String lname = scan.nextLine();
+                            if (lname != "") {
+                                lastname = lname.toLowerCase();
+                                try {
+                                    Students studentrecord = new Students(program, year, avggrade, lastname);
+                                    if (studentmanager.checkstudent(program, year, avggrade, lastname) == null) {
+                                        studentmanager.addStudents(studentrecord);
+                                        System.out.println("\n\nData for the Student added successfully.\n");
+                                    } else {
+                                        System.out.println("\n\nData for this student already exists.\n");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            } else {
+                                System.out.println(
+                                        "\nLast Name cannot be left Blank. It is manadatory to enter last name, Please try again.\n");
+                            }
 
-                    } else {
-                        System.out.println("\nUh Oh! The input is incorrect. Please enter your choice again.");
+                        } else {
+                            System.out.println("\nUh Oh! The input is incorrect. Please enter your choice again.");
+                            System.out.println(
+                                    "Your Input should be the Program Name(text only) and Year(integer number only) and should not be blank.\n");
+                        }
+                    } catch (Exception e1) {
                         System.out.println(
-                                "Your Input should be the Program Name(text only) and Year(integer number only) and should not be blank.\n");
+                                "\nSomething went Wrong. Please Make sure that,\n(1) You have entered a Whole Number for year\n(2) Average Grade should be between 0 and 100 (inclusive).");
                     }
                 }
 
                 else if (menu == 2) {
-
-                    System.out.println("\nEnter Student Program and the years worked on Graduate Degree : ");
-                    scan.skip("\\R?");
-                    String[] info = scan.nextLine().split(" ");
-                    if ((!info[0].equals(null) || !info[info.length - 1].equals(null))
-                            && (!info[0].equals("") && !info[info.length - 1].equals("")) && info.length >= 2) {
-                        program = (info[0].toLowerCase());
-                        year = (Integer.parseInt(info[info.length - 1]));
-
-                        System.out.print("Enter Average grade, or leave blank: ");
-                        String grade = scan.nextLine();
-                        if (grade.length() == 0) {
-                            avggrade = (0.0f);
-                        } else {
-                            avggrade = (Float.parseFloat(grade));
-                        }
-                        System.out.print("Enter the Name of the Supervisor: ");
-                        String supname = scan.nextLine();
-                        if (supname.length() != 0) {
-                            supervisor = (supname.toLowerCase());
-                        } else {
-                            System.out.println("\nSupervisor Name is Mandatory and Cannot be left Blank.");
-                            return;
-                        }
-                        System.out.print("Enter whether student is PHD or not (Enter 1 for Yes and 0 for No): ");
-                        int isphd = scan.nextInt();
-                        if (isphd == 1 || isphd == 0) {
-                            isPHD = (isphd);
-                        } else {
-                            System.out.println("\nPlease Enter either 1 or 0 ( 1 for Yes and 0 for No )");
-                            return;
-                        }
-                        System.out.print("Enter the Name of Undergraduate School or leave blank: ");
+                    try {
+                        System.out.println("\nEnter Student Program and the years worked on Graduate Degree : ");
                         scan.skip("\\R?");
-                        String ugsname = scan.nextLine();
-                        if (ugsname.length() == 0) {
-                            undergname = ("Not_Mentioned");
-                        } else {
-                            undergname = (ugsname.toLowerCase());
-                        }
-                        System.out.print("Enter the Last Name of the Student :");
-                        String lname = scan.nextLine();
-                        if (lname != "") {
-                            lastname = lname.toLowerCase();
-                            try {
-                                GraduateStudents studentrecord = new GraduateStudents(program, year, avggrade, lastname,
-                                        supervisor, isPHD, undergname);
-                                if (studentmanager.checkgradstudent(program, year, avggrade, lastname, supervisor,
-                                        isPHD, undergname) == null) {
-                                    studentmanager.addGraduateStudents(studentrecord);
-                                    System.out.println("\n\nData for the Student added successfully.\n");
-                                } else {
-                                    System.out.println("\n\nData for this student already exists.\n");
+                        String[] info = scan.nextLine().split(" ");
+                        if ((!info[0].equals(null) || !info[info.length - 1].equals(null))
+                                && (!info[0].equals("") && !info[info.length - 1].equals("")) && info.length >= 2) {
+                            program = (info[0].toLowerCase());
+                            year = (Integer.parseInt(info[info.length - 1]));
+
+                            System.out.print("Enter Average grade, or leave blank: ");
+                            String grade = scan.nextLine();
+                            if (grade.length() == 0) {
+                                avggrade = (0.0f);
+                            } else {
+                                avggrade = (Float.parseFloat(grade));
+                            }
+                            System.out.print("Enter the Name of the Supervisor: ");
+                            String supname = scan.nextLine();
+                            if (supname.length() != 0) {
+                                supervisor = (supname.toLowerCase());
+                            } else {
+                                System.out.println("\nSupervisor Name is Mandatory and Cannot be left Blank.");
+                                return;
+                            }
+                            System.out.print("Enter whether student is PHD or not (Enter 1 for Yes and 0 for No): ");
+                            int isphd = scan.nextInt();
+                            if (isphd == 1 || isphd == 0) {
+                                isPHD = (isphd);
+                            } else {
+                                System.out.println("\nPlease Enter either 1 or 0 ( 1 for Yes and 0 for No )");
+                                return;
+                            }
+                            System.out.print("Enter the Name of Undergraduate School or leave blank: ");
+                            scan.skip("\\R?");
+                            String ugsname = scan.nextLine();
+                            if (ugsname.length() == 0) {
+                                undergname = ("Not_Mentioned");
+                            } else {
+                                undergname = (ugsname.toLowerCase());
+                            }
+                            System.out.print("Enter the Last Name of the Student :");
+                            String lname = scan.nextLine();
+                            if (lname != "") {
+                                lastname = lname.toLowerCase();
+                                try {
+                                    GraduateStudents studentrecord = new GraduateStudents(program, year, avggrade,
+                                            lastname, supervisor, isPHD, undergname);
+                                    if (studentmanager.checkgradstudent(program, year, avggrade, lastname, supervisor,
+                                            isPHD, undergname) == null) {
+                                        studentmanager.addGraduateStudents(studentrecord);
+                                        System.out.println("\n\nData for the Student added successfully.\n");
+                                    } else {
+                                        System.out.println("\n\nData for this student already exists.\n");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
                                 }
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
+                            } else {
+                                System.out.println(
+                                        "Last Name cannot be left Blank. It is manadatory to enter last name, Please try again.");
                             }
                         } else {
+                            System.out.println("\nUh Oh! The input is incorrect. Please enter your choice again.");
                             System.out.println(
-                                    "Last Name cannot be left Blank. It is manadatory to enter last name, Please try again.");
+                                    "Your Input should be the Program Name(text only) and Year(integer number only) and should not be blank.\n");
                         }
-                    } else {
-                        System.out.println("\nUh Oh! The input is incorrect. Please enter your choice again.");
+                    } catch (Exception e1) {
                         System.out.println(
-                                "Your Input should be the Program Name(text only) and Year(integer number only) and should not be blank.\n");
+                                "\nSomething went Wrong. Please Make sure that,\n(1) You have entered a Whole Number for year\n(2) Average Grade should be between 0 and 100 (inclusive). (3) The value of isPHD field is a Number, either 1 or 0 only.");
                     }
                 }
 
@@ -241,35 +250,46 @@ public class ClassListSystem {
                             String[] items = studentfile.get(i).split("-");
 
                             if (items.length == 4) {
-                                String uprogram = items[0];
-                                int uyear = Integer.parseInt(items[1]);
-                                float uavggrade = Float.parseFloat(items[2]);
-                                String ulastname = items[3];
                                 try {
-                                    Students studentrecord = new Students(uprogram, uyear, uavggrade, ulastname);
-                                    if (studentmanager.checkstudent(uprogram, uyear, uavggrade, ulastname) == null) {
-                                        studentmanager.addStudents(studentrecord);
+                                    String uprogram = items[0];
+                                    int uyear = Integer.parseInt(items[1]);
+                                    float uavggrade = Float.parseFloat(items[2]);
+                                    String ulastname = items[3];
+                                    try {
+                                        Students studentrecord = new Students(uprogram, uyear, uavggrade, ulastname);
+                                        if (studentmanager.checkstudent(uprogram, uyear, uavggrade,
+                                                ulastname) == null) {
+                                            studentmanager.addStudents(studentrecord);
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
                                     }
-                                } catch (Exception e) {
-                                    System.out.println(e.getMessage());
+                                } catch (Exception e1) {
+                                    System.out.println(
+                                            "\nSomething went Wrong. Please Make sure that,\n(1) You have entered a Whole Number for year\n(2) Average Grade should be between 0 and 100 (inclusive).");
                                 }
                             } else if (items.length == 7) {
-                                String gprogram = items[0];
-                                int gyear = Integer.parseInt(items[1]);
-                                float gavggrade = Float.parseFloat(items[2]);
-                                String glastname = items[3];
-                                String gsuper = items[4];
-                                int gisphd = Integer.parseInt(items[5]);
-                                String gugname = items[6];
                                 try {
-                                    GraduateStudents studentrecord = new GraduateStudents(gprogram, gyear, gavggrade,
-                                            glastname, gsuper, gisphd, gugname);
-                                    if (studentmanager.checkgradstudent(gprogram, gyear, gavggrade, glastname, gsuper,
-                                            gisphd, gugname) == null) {
-                                        studentmanager.addGraduateStudents(studentrecord);
+                                    String gprogram = items[0];
+                                    int gyear = Integer.parseInt(items[1]);
+                                    float gavggrade = Float.parseFloat(items[2]);
+                                    String glastname = items[3];
+                                    String gsuper = items[4];
+                                    int gisphd = Integer.parseInt(items[5]);
+                                    String gugname = items[6];
+                                    try {
+                                        GraduateStudents studentrecord = new GraduateStudents(gprogram, gyear,
+                                                gavggrade, glastname, gsuper, gisphd, gugname);
+                                        if (studentmanager.checkgradstudent(gprogram, gyear, gavggrade, glastname,
+                                                gsuper, gisphd, gugname) == null) {
+                                            studentmanager.addGraduateStudents(studentrecord);
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
                                     }
-                                } catch (Exception e) {
-                                    System.out.println(e.getMessage());
+                                } catch (Exception e1) {
+                                    System.out.println(
+                                            "\nSomething went Wrong. Please Make sure that,\n(1) You have entered a Whole Number for year\n(2) Average Grade should be between 0 and 100 (inclusive). (3) The value of isPHD field is a Number, either 1 or 0 only.");
                                 }
                             }
                         }
