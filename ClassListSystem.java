@@ -6,11 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ClassListSystem {
 
     private static StudentManager studentmanager = new StudentManager();
+    static HashMap<String, String> index = new HashMap<String, String>(50);
+
     static Scanner scan = new Scanner(System.in);
 
     static ArrayList<String> studentfile = new ArrayList<>();
@@ -23,27 +26,28 @@ public class ClassListSystem {
     static String lastname;
     static String supervisor;
     static String undergname;
+    static int hashid = 0;
 
     public static void main(String[] args) {
         int menu = 0;
-        while (menu != 8) {
+        while (menu != 9) {
 
             System.out.println("\n------------------------------------------------------------");
             System.out.println("\nMenu Options:\n");
 
             System.out.println(
-                    "(1) Enter information for a new Student.\n(2) Enter information for a new Graduate Student.\n(3) Show all student information with each attribute on a separate line.\n(4) Print the average of the average grades for all students as well as the total number of students.\n(5) Enter a specific program and show all student information for that program.\n(6) Load student information from an input file.\n(7) Save all student information to an output file.\n(8) End program.");
+                    "(1) Enter information for a new Student.\n(2) Enter information for a new Graduate Student.\n(3) Show all student information with each attribute on a separate line.\n(4) Print the average of the average grades for all students as well as the total number of students.\n(5) Enter a specific program and show all student information for that program.\n(6) Load student information from an input file.\n(7) Save all student information to an output file.\n(8) Lookup via HashMap with program, year, and lastName.\n(9) End program.");
 
             System.out.print("\nEnter the option number of the action that you want to perform (1 - 8): ");
             menu = scan.nextInt();
-            if (menu <= 8 && menu >= 1) {
+            if (menu <= 9 && menu >= 1) {
                 if (menu == 1) {
                     System.out.println("\nEnter Student Program and Year for the Student: ");
                     scan.skip("\\R?");
                     String[] info = scan.nextLine().split(" ");
                     if ((!info[0].equals(null) || !info[info.length - 1].equals(null))
                             && (!info[0].equals("") && !info[info.length - 1].equals("")) && info.length >= 2) {
-                        program = info[0];
+                        program = info[0].toLowerCase();
                         year = Integer.parseInt(info[info.length - 1]);
 
                         System.out.print("Enter Average grade, or leave blank: ");
@@ -56,7 +60,7 @@ public class ClassListSystem {
                         System.out.print("Enter the Last Name of the Student :");
                         String lname = scan.nextLine();
                         if (lname != "") {
-                            lastname = lname;
+                            lastname = lname.toLowerCase();
                             Students studentrecord = new Students(program, year, avggrade, lastname);
                             if (studentmanager.checkstudent(program, year, avggrade, lastname) == null) {
                                 studentmanager.addStudents(studentrecord);
@@ -83,7 +87,7 @@ public class ClassListSystem {
                     String[] info = scan.nextLine().split(" ");
                     if ((!info[0].equals(null) || !info[info.length - 1].equals(null))
                             && (!info[0].equals("") && !info[info.length - 1].equals("")) && info.length >= 2) {
-                        program = (info[0]);
+                        program = (info[0].toLowerCase());
                         year = (Integer.parseInt(info[info.length - 1]));
 
                         System.out.print("Enter Average grade, or leave blank: ");
@@ -96,7 +100,7 @@ public class ClassListSystem {
                         System.out.print("Enter the Name of the Supervisor: ");
                         String supname = scan.nextLine();
                         if (supname.length() != 0) {
-                            supervisor = (supname);
+                            supervisor = (supname.toLowerCase());
                         } else {
                             System.out.println("\nSupervisor Name is Mandatory and Cannot be left Blank.");
                             return;
@@ -115,12 +119,12 @@ public class ClassListSystem {
                         if (ugsname.length() == 0) {
                             undergname = ("Not_Mentioned");
                         } else {
-                            undergname = (ugsname);
+                            undergname = (ugsname.toLowerCase());
                         }
                         System.out.print("Enter the Last Name of the Student :");
                         String lname = scan.nextLine();
                         if (lname != "") {
-                            lastname = lname;
+                            lastname = lname.toLowerCase();
                             GraduateStudents studentrecord = new GraduateStudents(program, year, avggrade, lastname,
                                     supervisor, isPHD, undergname);
                             if (studentmanager.checkgradstudent(program, year, avggrade, lastname, supervisor, isPHD,
@@ -193,7 +197,7 @@ public class ClassListSystem {
                     int enrol = 0;
                     System.out.print("Enter the Program for which you need information on : ");
                     scan.skip("\\R?");
-                    String prog = scan.nextLine();
+                    String prog = scan.nextLine().toLowerCase();
                     if (studentmanager.getStudents() != null) {
                         for (Students studval : studentmanager.getStudents()) {
                             if (studval.getProgram().equals(prog)) {
@@ -245,7 +249,7 @@ public class ClassListSystem {
                                 String gsuper = items[4];
                                 int gisphd = Integer.parseInt(items[5]);
                                 String gugname = items[6];
-                                GraduateStudents studentrecord = new GraduateStudents(gprogram, gyear, avggrade,
+                                GraduateStudents studentrecord = new GraduateStudents(gprogram, gyear, gavggrade,
                                         glastname, gsuper, gisphd, gugname);
                                 if (studentmanager.checkgradstudent(gprogram, gyear, gavggrade, glastname, gsuper,
                                         gisphd, gugname) == null) {
@@ -282,12 +286,82 @@ public class ClassListSystem {
                 }
 
                 else if (menu == 8) {
+                    System.out.println("Search using Hash Maps");
+                    ArrayList<Integer> value = new ArrayList<Integer>();
+                    if (studentmanager.getStudents() != null) {
+                        for (Students studentiter : studentmanager.getStudents()) {
+                            hashid++;
+                            studentiter.setHashid(hashid);
+                            String filestr = studentiter.toFileString();
+                            String[] tokens = filestr.split("-");
+                            for (int i = 0; i < tokens.length; i++) {
+                                for (int j = 0; j < studentmanager.getStudents().size(); j++) {
+                                    index.put(tokens[i].toLowerCase(), String.valueOf(hashid));
+                                    value.clear();
+                                }
+                            }
+                        }
+                    }
+                    if (studentmanager.getGraduateStudents() != null) {
+                        for (GraduateStudents gradstudentiter : studentmanager.getGraduateStudents()) {
+                            hashid++;
+                            gradstudentiter.setHashid(hashid);
+                            String filestr = gradstudentiter.toFileString();
+                            String[] tokens = filestr.split("-");
+                            for (int i = 0; i < tokens.length; i++) {
+                                for (int j = 0; j < studentmanager.getGraduateStudents().size(); j++) {
+                                    index.put(tokens[i].toLowerCase(), String.valueOf(hashid));
+                                    value.clear();
+                                }
+                            }
+                        }
+                    }
+
+                    System.out.println("Enter the program, year, or lastName of the student you wish to search for: ");
+                    scan.skip("\\R?");
+                    String keyw = scan.nextLine().toLowerCase();
+                    String[] keyar = keyw.split(" ");
+                    ArrayList<Integer> idlist = new ArrayList<>();
+                    for (int k = 0; k < keyar.length; k++) {
+                        String word = keyar[k];
+                        String listval = index.get(word);
+                        if (!(listval == null)) {
+                            int id = Integer.parseInt(listval);
+                            idlist.add(id);
+                        }
+                    }
+
+                    if (idlist.size() <= 0) {
+                        System.out.println("\nNo Results found for the keyword " + keyw + "\n");
+                    } else {
+                        System.out.println("\nYour Search results : ");
+                        for (int i = 0; i < idlist.size(); i++) {
+                            int pt = idlist.get(i);
+                            for (int j = 0; j < studentmanager.getStudents().size(); j++) {
+                                if (pt == studentmanager.getStudents().get(j).getHashid()) {
+                                    System.out.println(studentmanager.getStudents().get(j).toString());
+                                }
+                            }
+                        }
+                        for (int i = 0; i < idlist.size(); i++) {
+                            int pt = idlist.get(i);
+                            for (int j = 0; j < studentmanager.getGraduateStudents().size(); j++) {
+                                if (pt == studentmanager.getGraduateStudents().get(j).getHashid()) {
+                                    System.out.println(studentmanager.getGraduateStudents().get(j).toString());
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                else if (menu == 9) {
                     System.out.println("\nHave a Nice Day!\n");
                     System.exit(0);
                 }
 
             } else {
-                System.out.println("\nPlease enter a Vaild Choice ( A number from 1 to 8 )\n");
+                System.out.println("\nPlease enter a Vaild Choice ( A number from 1 to 9 )\n");
             }
         }
     }

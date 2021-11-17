@@ -49,4 +49,10 @@ public class GraduateStudents extends Students {
         return program + "-" + year + "-" + average + "-" + lastName + "-" + supervisor + "-" + isPHD + "-"
                 + undergradschool + " ";
     }
+
+    @Override
+    public String toHashString() {
+        return program + " " + year + " " + average + " " + lastName + " " + supervisor + " " + isPHD + " "
+                + undergradschool + " ";
+    }
 }

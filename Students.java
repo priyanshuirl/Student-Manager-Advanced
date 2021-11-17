@@ -3,6 +3,7 @@ public class Students {
     int year;
     float average;
     String lastName;
+    int hashid;
 
     public Students(String sprogram, int syear, float saverage, String slastname) {
         this.program = sprogram;
@@ -27,6 +28,10 @@ public class Students {
         return lastName;
     }
 
+    public int getHashid() {
+        return hashid;
+    }
+
     public void setProgram(String sprogram) {
         this.program = sprogram;
     }
@@ -43,6 +48,10 @@ public class Students {
         this.lastName = lastName;
     }
 
+    public void setHashid(int hashid) {
+        this.hashid = hashid;
+    }
+
     public String toString() {
         return "Program : " + program + "\nYear : " + year + "\nAverage Grade : " + average + "\nlast Name : "
                 + lastName + "\n";
@@ -50,5 +59,9 @@ public class Students {
 
     public String toFileString() {
         return program + "-" + year + "-" + average + "-" + lastName + " ";
+    }
+
+    public String toHashString() {
+        return program + " " + year + " " + average + " " + lastName + " ";
     }
 }
